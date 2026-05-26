@@ -65,7 +65,7 @@
     }
     #hero .bg {
       position: absolute; inset: 0;
-      background-image: url('images/como.png');
+      background-image: url('images/como.jpg');
       background-size: cover; background-position: center 30%;
       transform: scale(1.03);
       transition: transform 8s ease;
@@ -230,7 +230,7 @@
       object-fit: cover; display: block;
     }
     .video-wrapper .video-poster {
-      background-image: url('images/portofino.png');
+      background-image: url('images/portofino.jpg');
       background-size: cover; background-position: center;
     }
     .video-overlay {
@@ -351,7 +351,7 @@
     /* ─── DIVIDER IMAGE ─── */
     .img-divider {
       height: 60vh; overflow: hidden;
-      background-image: url('images/trunk.png');
+      background-image: url('images/trunk.jpg');
       background-size: cover; background-position: center;
       background-attachment: fixed;
     }
@@ -365,7 +365,7 @@
     #about .about-inner { max-width: 680px; margin: 0 auto; }
     #about .avatar {
       width: 90px; height: 90px; border-radius: 50%;
-      background-image: url('images/avatar.png');
+      background-image: url('images/avatar.jpg');
       background-size: cover; background-position: center;
       margin: 0 auto 32px;
       border: 1px solid rgba(184,150,90,.3);
@@ -494,29 +494,29 @@
     <div class="gallery-grid">
 
       <div class="g-item tall fade">
-        <img src="images/como.png" alt="Lake Como" loading="lazy" />
+        <img src="images/como.jpg" alt="Lake Como" loading="lazy" />
         <div class="caption">Lago di Como — AI Generated</div>
       </div>
 
       <div class="g-item tall fade">
-        <img src="images/riva-dock.png" alt="Riva Aquarama" loading="lazy"
+        <img src="images/riva-dock.jpg" alt="Riva Aquarama" loading="lazy"
              style="object-position: 20% center; transform: scale(1.35); transform-origin: 20% center;" />
         <div class="caption">Riva Aquarama — AI Generated</div>
       </div>
 
       <div class="g-item wide full fade">
-        <img src="images/riva-step.png" alt="L'arrivo" loading="lazy"
+        <img src="images/riva-step.jpg" alt="L'arrivo" loading="lazy"
              style="object-position: center 25%;" />
         <div class="caption">L'arrivo — AI Generated</div>
       </div>
 
       <div class="g-item sq fade">
-        <img src="images/trunk.png" alt="Still Life" loading="lazy" />
+        <img src="images/trunk.jpg" alt="Still Life" loading="lazy" />
         <div class="caption">Still Life — AI Generated</div>
       </div>
 
       <div class="g-item sq fade">
-        <img src="images/portofino.png" alt="Portofino" loading="lazy" />
+        <img src="images/portofino.jpg" alt="Portofino" loading="lazy" />
         <div class="caption">Portofino — AI Generated</div>
       </div>
 
@@ -530,7 +530,7 @@
       <h2><em>She arrives. She stays.</em></h2>
     </div>
     <div class="video-wrapper">
-      <video autoplay muted loop playsinline>
+      <video preload="none" muted loop playsinline poster="images/portofino.jpg">
         <source src="images/video.mp4" type="video/mp4" />
       </video>
       <div class="video-overlay" id="videoOverlay">
@@ -643,7 +643,7 @@
     const bg = document.getElementById('heroBg');
     const img = new Image();
     img.onload = () => bg.classList.add('loaded');
-    img.src = 'images/como.png';
+    img.src = 'images/como.jpg';
     bg.classList.add('loaded');
 
     // Fade on scroll
