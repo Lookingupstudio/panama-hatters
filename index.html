@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panama Hatters — Proposta Creativa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:  #07070500;
+      --ink:    #080806;
+      --cream:  #f4ede3;
+      --warm:   #faf7f2;
+      --gold:   #b8965a;
+      --gold-lt:#d4b07a;
+      --grey:   #9a9590;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--cream);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ─── UTILITY ─── */
+    .serif  { font-family: 'Cormorant Garamond', serif; }
+    .gold   { color: var(--gold); }
+    .rule   { width: 40px; height: 1px; background: var(--gold); display: inline-block; }
+    .fade   { opacity: 0; transform: translateY(30px); transition: opacity .9s ease, transform .9s ease; }
+    .fade.visible { opacity: 1; transform: none; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 28px 48px;
+      background: linear-gradient(to bottom, rgba(8,8,6,.7), transparent);
+    }
+    nav .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px; font-weight: 300;
+      letter-spacing: .35em; text-transform: uppercase;
+      color: var(--cream);
+    }
+    nav .tag {
+      font-size: 10px; font-weight: 300;
+      letter-spacing: .25em; text-transform: uppercase;
+      color: var(--gold); opacity: .8;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative; height: 100vh; width: 100%;
+      display: flex; flex-direction: column;
+      justify-content: flex-end; align-items: center;
+      padding-bottom: 80px;
+      overflow: hidden;
+    }
+    #hero .bg {
+      position: absolute; inset: 0;
+      background-image: url('images/como.png');
+      background-size: cover; background-position: center 30%;
+      transform: scale(1.03);
+      transition: transform 8s ease;
+    }
+    #hero .bg.loaded { transform: scale(1); }
+    #hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(8,8,6,.2) 0%,
+        rgba(8,8,6,.1) 40%,
+        rgba(8,8,6,.75) 100%
+      );
+    }
+    #hero .content {
+      position: relative; z-index: 2;
+      text-align: center;
+    }
+    #hero .eyebrow {
+      font-size: 10px; font-weight: 400;
+      letter-spacing: .4em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
+    }
+    #hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(38px, 6vw, 72px);
+      font-weight: 300; line-height: 1.1;
+      letter-spacing: .08em;
+      color: var(--cream);
+      margin-bottom: 24px;
+    }
+    #hero h1 em { font-style: italic; color: var(--gold-lt); }
+    #hero .sub {
+      font-size: 11px; font-weight: 300;
+      letter-spacing: .3em; text-transform: uppercase;
+      color: rgba(244,237,227,.6);
+    }
+    .scroll-hint {
+      position: absolute; bottom: 32px; left: 50%;
+      transform: translateX(-50%); z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .scroll-hint span {
+      font-size: 9px; letter-spacing: .3em; text-transform: uppercase;
+      color: rgba(244,237,227,.4);
+    }
+    .scroll-hint .line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, rgba(184,150,90,.6), transparent);
+      animation: scrollLine 2s ease infinite;
+    }
+    @keyframes scrollLine {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ─── MANIFESTO ─── */
+    #manifesto {
+      background: var(--ink);
+      padding: 140px 48px;
+      text-align: center;
+    }
+    #manifesto .trio {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 300; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--cream);
+      margin-bottom: 60px;
+    }
+    #manifesto .trio span { color: var(--gold); margin: 0 16px; font-weight: 300; }
+    #manifesto p {
+      max-width: 560px; margin: 0 auto;
+      font-size: 15px; line-height: 1.9;
+      color: rgba(244,237,227,.65);
+      font-weight: 300;
+    }
+    #manifesto p + p { margin-top: 20px; }
+
+    /* ─── SECTION HEADER ─── */
+    .sec-header {
+      text-align: center;
+      padding: 100px 48px 60px;
+    }
+    .sec-header .eyebrow {
+      font-size: 10px; font-weight: 400;
+      letter-spacing: .4em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 16px;
+      display: block;
+    }
+    .sec-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 300; letter-spacing: .06em;
+      color: var(--cream);
+    }
+    .sec-header h2 em { font-style: italic; }
+
+    /* ─── GALLERY ─── */
+    #gallery { background: var(--ink); padding-bottom: 120px; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      gap: 3px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 3px;
+    }
+
+    .gallery-grid .g-item {
+      position: relative; overflow: hidden;
+      background: #111;
+    }
+    .gallery-grid .g-item.full { grid-column: 1 / -1; }
+    .gallery-grid .g-item.tall { aspect-ratio: 9/16; }
+    .gallery-grid .g-item.wide { aspect-ratio: 16/9; }
+    .gallery-grid .g-item.sq   { aspect-ratio: 3/4; }
+
+    .gallery-grid img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform .8s ease;
+    }
+    .gallery-grid .g-item:hover img { transform: scale(1.04); }
+
+    .gallery-grid .caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 40px 24px 20px;
+      background: linear-gradient(to top, rgba(8,8,6,.7), transparent);
+      font-size: 10px; letter-spacing: .25em; text-transform: uppercase;
+      color: rgba(244,237,227,.6);
+    }
+
+    /* ─── VIDEO ─── */
+    #video-section {
+      position: relative;
+      background: var(--ink);
+    }
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background: #0d0d0b;
+    }
+    .video-wrapper video {
+      height: 100vh;
+      width: auto;
+      display: block;
+      position: relative;
+      z-index: 0;
+    }
+    .video-wrapper .video-poster {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .video-wrapper .video-poster {
+      background-image: url('images/portofino.png');
+      background-size: cover; background-position: center;
+    }
+    .video-overlay {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      background: rgba(8,8,6,.45);
+    }
+    .play-btn {
+      width: 72px; height: 72px;
+      border: 1px solid rgba(184,150,90,.6);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; margin-bottom: 24px;
+      transition: border-color .3s, background .3s;
+    }
+    .play-btn:hover { border-color: var(--gold); background: rgba(184,150,90,.1); }
+    .play-btn svg { width: 22px; fill: var(--cream); margin-left: 4px; }
+    .video-overlay h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 3vw, 38px);
+      font-weight: 300; font-style: italic;
+      color: var(--cream); letter-spacing: .04em;
+      margin-bottom: 10px;
+    }
+    .video-overlay .vid-sub {
+      font-size: 10px; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--gold);
+    }
+
+    /* ─── SERVICES ─── */
+    #services {
+      background: var(--ink);
+      padding-bottom: 140px;
+    }
+    .services-wrap {
+      max-width: 1000px; margin: 0 auto;
+      padding: 0 48px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+    }
+    .svc-card {
+      border: 1px solid rgba(184,150,90,.2);
+      padding: 52px 44px;
+      position: relative; overflow: hidden;
+      transition: border-color .4s;
+    }
+    .svc-card:hover { border-color: rgba(184,150,90,.5); }
+    .svc-card.featured {
+      background: rgba(184,150,90,.05);
+      border-color: rgba(184,150,90,.4);
+    }
+    .svc-card .badge {
+      position: absolute; top: 20px; right: 20px;
+      font-size: 9px; letter-spacing: .25em; text-transform: uppercase;
+      color: var(--gold); border: 1px solid rgba(184,150,90,.4);
+      padding: 4px 10px;
+    }
+    .svc-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px; font-weight: 300;
+      color: var(--cream); margin-bottom: 8px;
+      letter-spacing: .04em;
+    }
+    .svc-card .price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px; font-weight: 300;
+      color: var(--gold); margin: 20px 0 4px;
+      letter-spacing: .02em;
+    }
+    .svc-card .price-note {
+      font-size: 10px; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--grey);
+      margin-bottom: 32px;
+    }
+    .svc-card ul {
+      list-style: none;
+    }
+    .svc-card ul li {
+      font-size: 13px; font-weight: 300;
+      color: rgba(244,237,227,.65);
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(244,237,227,.07);
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .svc-card ul li::before {
+      content: '—'; color: var(--gold); flex-shrink: 0;
+      font-size: 11px; margin-top: 2px;
+    }
+
+    .catalog-row {
+      max-width: 1000px; margin: 3px auto 0;
+      padding: 0 48px;
+    }
+    .catalog-card {
+      border: 1px solid rgba(184,150,90,.15);
+      padding: 36px 44px;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: border-color .4s;
+    }
+    .catalog-card:hover { border-color: rgba(184,150,90,.4); }
+    .catalog-card .left h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 300; color: var(--cream);
+      margin-bottom: 6px;
+    }
+    .catalog-card .left p {
+      font-size: 12px; color: var(--grey); letter-spacing: .05em;
+    }
+    .catalog-card .right .price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 34px; font-weight: 300; color: var(--gold);
+    }
+    .catalog-card .right .note {
+      font-size: 10px; color: var(--grey);
+      letter-spacing: .15em; text-align: right;
+    }
+
+    /* ─── DIVIDER IMAGE ─── */
+    .img-divider {
+      height: 60vh; overflow: hidden;
+      background-image: url('images/trunk.png');
+      background-size: cover; background-position: center;
+      background-attachment: fixed;
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: #0d0d0b;
+      padding: 120px 48px;
+      text-align: center;
+    }
+    #about .about-inner { max-width: 680px; margin: 0 auto; }
+    #about .avatar {
+      width: 90px; height: 90px; border-radius: 50%;
+      background-image: url('images/avatar.png');
+      background-size: cover; background-position: center;
+      margin: 0 auto 32px;
+      border: 1px solid rgba(184,150,90,.3);
+    }
+    #about h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px; font-weight: 300;
+      color: var(--cream); margin-bottom: 8px;
+    }
+    #about .role {
+      font-size: 10px; letter-spacing: .35em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 36px; display: block;
+    }
+    #about p {
+      font-size: 15px; line-height: 1.9;
+      color: rgba(244,237,227,.6);
+    }
+
+    /* ─── CTA ─── */
+    #cta {
+      background: var(--ink);
+      padding: 140px 48px;
+      text-align: center;
+      border-top: 1px solid rgba(184,150,90,.15);
+    }
+    #cta h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 300; font-style: italic;
+      color: var(--cream); letter-spacing: .04em;
+      margin-bottom: 40px;
+    }
+    #cta p {
+      font-size: 13px; color: var(--grey);
+      letter-spacing: .15em; text-transform: uppercase;
+      margin-bottom: 52px;
+    }
+    .btn-gold {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 16px 44px;
+      font-size: 10px; letter-spacing: .35em;
+      text-transform: uppercase; text-decoration: none;
+      transition: background .3s, color .3s;
+    }
+    .btn-gold:hover { background: var(--gold); color: var(--ink); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(244,237,227,.06);
+      padding: 40px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer .f-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--grey);
+    }
+    footer .f-note {
+      font-size: 10px; letter-spacing: .2em;
+      text-transform: uppercase; color: rgba(154,149,144,.5);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .services-wrap { grid-template-columns: 1fr; padding: 0 24px; }
+      .catalog-row { padding: 0 24px; }
+      .catalog-card { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-grid .g-item.full { grid-column: 1; }
+      #manifesto { padding: 100px 24px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Panama Hatters</div>
+    <div class="tag">Proposta Creativa 2026</div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="bg" id="heroBg"></div>
+    <div class="content fade">
+      <p class="eyebrow">AI Creative Direction</p>
+      <h1>Una nuova <em>visione</em><br>per Panama Hatters</h1>
+      <p class="sub">Contenuti · Avatar · Catalogo · Identità Digitale</p>
+    </div>
+    <div class="scroll-hint">
+      <div class="line"></div>
+      <span>Scopri</span>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section id="manifesto">
+    <div class="trio fade">
+      IDENTITÀ<span>·</span>VISIONE<span>·</span>PRESENZA
+    </div>
+    <p class="fade">
+      Panama Hatters non è semplicemente un cappello. È una firma silenziosa.
+      Una presenza che si scopre, si indossa, si ricorda.
+    </p>
+    <p class="fade" style="margin-top:20px">
+      Questa proposta nasce da quella stessa filosofia: contenuti visivi AI che
+      non gridano, ma appartengono. Immagini che potrebbero già essere state
+      scattate su uno yacht a Portofino, su una terrazza a Villa d'Este,
+      in una tenuta in Toscana. E invece non esistevano ancora.
+    </p>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="sec-header">
+      <span class="eyebrow">Portfolio AI — Esempi Generati</span>
+      <h2>Cosa posso <em>creare</em></h2>
+    </div>
+
+    <div class="gallery-grid">
+
+      <div class="g-item tall fade">
+        <img src="images/como.png" alt="Lake Como" loading="lazy" />
+        <div class="caption">Lago di Como — AI Generated</div>
+      </div>
+
+      <div class="g-item tall fade">
+        <img src="images/riva-dock.png" alt="Riva Aquarama" loading="lazy"
+             style="object-position: 20% center; transform: scale(1.35); transform-origin: 20% center;" />
+        <div class="caption">Riva Aquarama — AI Generated</div>
+      </div>
+
+      <div class="g-item wide full fade">
+        <img src="images/riva-step.png" alt="L'arrivo" loading="lazy"
+             style="object-position: center 25%;" />
+        <div class="caption">L'arrivo — AI Generated</div>
+      </div>
+
+      <div class="g-item sq fade">
+        <img src="images/trunk.png" alt="Still Life" loading="lazy" />
+        <div class="caption">Still Life — AI Generated</div>
+      </div>
+
+      <div class="g-item sq fade">
+        <img src="images/portofino.png" alt="Portofino" loading="lazy" />
+        <div class="caption">Portofino — AI Generated</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- VIDEO -->
+  <section id="video-section">
+    <div class="sec-header">
+      <span class="eyebrow">Storytelling Video</span>
+      <h2><em>She arrives. She stays.</em></h2>
+    </div>
+    <div class="video-wrapper">
+      <video autoplay muted loop playsinline>
+        <source src="images/video.mp4" type="video/mp4" />
+      </video>
+      <div class="video-overlay" id="videoOverlay">
+        <div class="play-btn" id="playBtn">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <h3>"She arrives. She stays."</h3>
+        <p class="vid-sub">Cortometraggio · 45 secondi · AI Generated</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="img-divider"></div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="sec-header">
+      <span class="eyebrow">La Proposta</span>
+      <h2>Servizi e <em>investimento</em></h2>
+    </div>
+
+    <div class="services-wrap">
+
+      <div class="svc-card fade">
+        <h3>Contenuti AI</h3>
+        <div class="price">€ 1.500</div>
+        <div class="price-note">al mese</div>
+        <ul>
+          <li>15 contenuti / mese — Profilo Mr. Panama<br><span style="color:var(--grey);font-size:11px">Avatar in contesti luxury esclusivi</span></li>
+          <li>15 contenuti / mese — Profilo Panama Hatters<br><span style="color:var(--grey);font-size:11px">Istituzionali, video e immagini</span></li>
+          <li>10 contenuti / mese — Sito web</li>
+          <li>Still life uniformati inclusi</li>
+          <li>40 contenuti totali al mese</li>
+        </ul>
+      </div>
+
+      <div class="svc-card featured fade">
+        <div class="badge">Consigliato</div>
+        <h3>Pacchetto Completo</h3>
+        <div class="price">€ 2.500</div>
+        <div class="price-note">al mese</div>
+        <ul>
+          <li>Tutto incluso nel piano Contenuti AI</li>
+          <li>Gestione editoriale social</li>
+          <li>Programmazione e pubblicazione</li>
+          <li>Caption e copy in italiano e inglese</li>
+          <li>Stories e formati verticali</li>
+          <li>Distribuzione su TikTok inclusa</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="catalog-row">
+      <div class="catalog-card fade" style="opacity:.6; border-color: rgba(184,150,90,.1);">
+        <div class="left">
+          <h3>Catalogo 2027 <span style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-left:12px;border:1px solid rgba(184,150,90,.4);padding:3px 8px;">Stand By</span></h3>
+          <p>Impostazione grafica · Contenuti visivi AI · Coerenza brand</p>
+        </div>
+      </div>
+      <div class="catalog-card fade" style="opacity:.6; border-color: rgba(184,150,90,.1); margin-top:3px;">
+        <div class="left">
+          <h3>Sito E-commerce AI <span style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-left:12px;border:1px solid rgba(184,150,90,.4);padding:3px 8px;">Stand By</span></h3>
+          <p>In valutazione con il programmatore · Fase successiva</p>
+        </div>
+        <div class="right">
+          <div class="price" style="color:var(--grey);">T.B.D.</div>
+          <div class="note">Seconda fase</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-inner fade">
+      <div class="avatar"></div>
+      <h2>Mattia Farruggia</h2>
+      <span class="role">AI Visual Director · Creative Strategist</span>
+      <p>
+        Lavoro all'intersezione tra intelligenza artificiale e direzione creativa.
+        Specializzato in contenuti visual AI per brand luxury e lifestyle:
+        immagini e video generati con modelli all'avanguardia,
+        diretti con lo stesso rigore di un set fotografico professionale.
+        Il risultato è contenuto che non sembra AI — sembra vero,
+        perché è pensato come tale.
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <h2 class="fade">Iniziamo.</h2>
+    <p class="fade">Disponibile per una call riservata</p>
+    <a href="https://wa.me/393313637233" target="_blank" class="btn-gold fade">
+      Scrivimi su WhatsApp
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="f-logo">Mattia Farruggia × Panama Hatters — 2026</div>
+    <div class="f-note">Proposta riservata · Non distribuire</div>
+  </footer>
+
+  <script>
+    // Hero bg load
+    const bg = document.getElementById('heroBg');
+    const img = new Image();
+    img.onload = () => bg.classList.add('loaded');
+    img.src = 'images/como.png';
+    bg.classList.add('loaded');
+
+    // Fade on scroll
+    const fades = document.querySelectorAll('.fade');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    fades.forEach(el => obs.observe(el));
+
+    // Video: nascondi overlay al click, play/pause
+    const playBtn = document.getElementById('playBtn');
+    const videoOverlay = document.getElementById('videoOverlay');
+    const videoEl = document.querySelector('#video-section video');
+    if (playBtn && videoEl) {
+      playBtn.addEventListener('click', () => {
+        if (videoEl.paused) {
+          videoEl.play();
+          videoOverlay.style.opacity = '0';
+          videoOverlay.style.pointerEvents = 'none';
+        } else {
+          videoEl.pause();
+          videoOverlay.style.opacity = '1';
+          videoOverlay.style.pointerEvents = 'auto';
+        }
+      });
+      videoOverlay.style.transition = 'opacity .4s ease';
+    }
+  </script>
+
+</body>
+</html>
